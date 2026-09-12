@@ -1,8 +1,31 @@
+:root {
+    --color-bg: #F5F2EF;
+    --color-primary: #5D7763;
+    --color-border: #D8CFC8;
+    --color-muted: #73776d;
+    --color-link-hover: #6c4b54;
+    --color-header-bg: #E4EBE4;
+    --color-header-border: #CBD8CB;
+    --color-header-text: #656A60;
+    --color-accent: #F5E4DE;
+    --color-accent-dark: #bd7188;
+    --color-table-head-bg: #DDE7DE;
+    --color-table-head-text: #46564A;
+    --color-row-hover: #FAF4F1;
+    --color-hour-text: #704D59;
+    --color-meta-bg: #d5c3c4;
+    --color-meta-border: #a19d9d;
+    --shadow-lift: 0 18px 28px rgba(0, 0, 0, 0.18);
+}
+
 body {
     font-family: 'Trebuchet MS', sans-serif;
-    background-color: #F5F2EF;
+    background-color: var(--color-bg);
     color: #000000;
     line-height: 2;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
 }
 
 h1, h2, h3 {
@@ -10,20 +33,21 @@ h1, h2, h3 {
 }
 
 h1 {
-    color: #5D7763;
+    color: var(--color-primary);
     font-size: 2.5rem;
     margin-bottom: 5px;
 }
 
 h2 {
-    color: #5D7763;
+    color: var(--color-primary);
     margin-top: 50px;
-    border-bottom: 2px solid #D8CFC8;
+    border-bottom: 2px solid var(--color-border);
     padding-bottom: 15px;
+    clear: both;
 }
 
 h3 {
-    color: #73776d;
+    color: var(--color-muted);
 }
 
 p {
@@ -38,26 +62,31 @@ img {
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
+.foto-perfil {
+    float: left;
+    margin: 0 25px 10px 0;
+}
+
 a {
-    color: #5D7763;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: bold;
 }
 
 a:hover {
-    color: #6c4b54;
+    color: var(--color-link-hover);
     text-decoration: underline;
 }
 
 header {
-    background-color: #E4EBE4;
+    background-color: var(--color-header-bg);
     text-align: center;
     padding: 40px 20px;
-    border-bottom: 8px solid #CBD8CB;
+    border-bottom: 8px solid var(--color-header-border);
 }
 
 header p {
-    color: #656A60;
+    color: var(--color-header-text);
     font-size: 20px;
 }
 
@@ -75,7 +104,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #F5E4DE;
+    background-color: var(--color-accent);
     text-decoration: none;
 }
 
@@ -86,9 +115,9 @@ main {
 }
 
 .destacado {
-    background-color: #F5E4DE;
-    border-left: 6px solid #bd7188;
-    border-top: 6px solid #bd7188;
+    background-color: var(--color-accent);
+    border-left: 6px solid var(--color-accent-dark);
+    border-top: 6px solid var(--color-accent-dark);
     border-radius: 8px;
     padding: 15px 20px;
     margin: 50px 0;
@@ -114,22 +143,22 @@ table {
 }
 
 th, td {
-    border: 2px solid #D8CFC8;
+    border: 2px solid var(--color-border);
     padding: 10px;
     text-align: center;
 }
 
 th {
-    background-color: #DDE7DE;
-    color: #46564A;
+    background-color: var(--color-table-head-bg);
+    color: var(--color-table-head-text);
 }
 
 tr:hover {
-    background-color: #FAF4F1;
+    background-color: var(--color-row-hover);
 }
 
 #schedule th {
-    background-color: #DDE7DE;
+    background-color: var(--color-table-head-bg);
     padding: 12px;
 }
 
@@ -138,39 +167,60 @@ tr:hover {
 }
 
 .hour-schedule {
-    background-color: #F5E4DE;
-    color: #704D59;
+    background-color: var(--color-accent);
+    color: var(--color-hour-text);
     font-weight: bold;
 }
 
-.meta {
-    background-color: #d5c3c4;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
+#metas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    background-color: transparent;
+    padding: 0;
+    box-shadow: none;
+    font-size: 20px;
+    list-style: none; /* quita los números */
 }
 
+.meta {
+    background-color: var(--color-meta-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0;
+    overflow: hidden; /* evita que la imagen se salga de los bordes redondeados */
+    transition: transform 0.25s ease, box-shadow 0.25s ease; /* suaviza el efecto de hover */
+}
+
+.meta:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lift);
+}
+
+/* Flexbox interno: alinea el texto y la imagen lado a lado dentro de la tarjeta */
 .meta-contenido {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 15px;
+}
+
+/* El texto ocupa todo el espacio disponible junto a la imagen */
+.meta-contenido span {
+    flex: 1;
 }
 
 .meta img {
-    margin: 0 0 0 30px;
-    width: 220px;
-    height: 150px;
+    flex: none;
+    margin: 0;
+    width: 110px;
+    height: 90px;
+    object-fit: cover; /* recorta la imagen para llenar el espacio sin distorsionarla */
     border-radius: 4px;
-    border: 2px dashed #a19d9d;
-}
-
-#metas{
-    background-color: #d5c3c4;
-    font-size: 20px;
+    border: 2px dashed var(--color-meta-border);
 }
 
 footer {
-    background-color: #5D7763;
+    background-color: var(--color-primary);
     text-align: center;
     color: white;
     padding: 20px;
